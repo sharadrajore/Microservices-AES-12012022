@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdvancedInitializer { 
+public class AdvancedInitializer { // Ioc container
 
 	private static Map<String, Object> hmapBeans = new HashMap<String, Object>();
 	
