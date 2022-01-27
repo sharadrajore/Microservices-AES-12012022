@@ -3,71 +3,59 @@ package com.zensar.blog.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.blog.entity.Post;
+import com.zensar.blog.service.PostService;
 
 @RestController
+@RequestMapping("/api/posts")
 public class PostController {
 
 	// CRUD Created,Read,Update,Delete
-
-	private List<Post> posts = new ArrayList<>();
+	@Autowired
+	private PostService postService;
 
 	// http://localhost:8080/api/posts -> POST
 
-	@PostMapping("/api/posts")
-	public boolean createPost(@RequestBody Post post) {
-		return posts.add(post);
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	// @RequestMapping(method=RequestMethod.POST)
+	public Post createPost(@RequestBody Post post) {
+		return postService.createPost(post);
 	}
 
 	// http://localhost:8080/api/posts -> GET
-	@GetMapping("/api/posts")
+	@GetMapping
 	public List<Post> getAllPost() {
-		return posts;
+		return postService.getAllPost();
 	}
 
 	// http://localhost:8080/api/posts/{postId} -> GET
-	@GetMapping("/api/posts/{postId}")
-	public Post getPostById(@PathVariable("postId") Long postId) {
-		System.out.println("postId is " + postId);
-
-		for (Post post : posts) {
-			if (post.getId().equals(postId)) {
-				System.out.println(post);
-				return post;
-			}
-		}
-		return null;
+	@GetMapping(path = "/{postId}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public Post getPostById(@PathVariable("postId") Long id) {
+		return postService.getPostById(id);
 	}
 
 	// http://localhost:8080/api/posts/{postId} -> Delete
-	@DeleteMapping("/api/posts/{postId}")
-	public boolean deletePostById(@PathVariable("postId") Long postId) {
-		System.out.println("postId is " + postId);
-
-		for (Post post : posts) {
-			if (post.getId().equals(postId)) {
-				return posts.remove(post);
-			}
-		}
-		return false;
+	@DeleteMapping("/{postId}")
+	public void deletePostById(@PathVariable Long postId) {
+		postService.deletePostById(postId);
 	}
 
-	@PutMapping("/api/posts/{postId}")
+	@PutMapping("/{postId}")
 	public Post updatePost(@RequestBody Post post, @PathVariable("postId") Long postId) {
-		Post availablePost = this.getPostById(postId);
-
-		availablePost.setTitle(post.getTitle());
-		availablePost.setContent(post.getContent());
-		availablePost.setContent(post.getContent());
-		return availablePost;
+		return postService.updatePost(post, postId);
 	}
 
 }
