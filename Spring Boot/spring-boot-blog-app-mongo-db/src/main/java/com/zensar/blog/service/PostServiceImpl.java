@@ -17,8 +17,8 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	//@Autowired
-	//private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public PostDto createPost(PostDto post) {
@@ -35,26 +35,26 @@ public class PostServiceImpl implements PostService {
 
 	private PostDto mapToDto(Post post) {
 		
-		//PostDto dto = modelMapper.map(post, PostDto.class);
+		PostDto dto = modelMapper.map(post, PostDto.class);
 		
-		PostDto dto = new PostDto();
+		/*PostDto dto = new PostDto();
 		dto.setId(post.getId());
 		dto.setTitle(post.getTitle());
 		dto.setDescription(post.getDescription());
-		dto.setContent(post.getContent());
+		dto.setContent(post.getContent());*/
 		
 		return dto;
 	}
 
 	private Post mapToEntity(PostDto post) {
 		
-	//	Post post2 = modelMapper.map(post,Post.class);
-		Post postEntity = new Post();
+		Post post2 = modelMapper.map(post,Post.class);
+		/*Post postEntity = new Post();
 		postEntity.setId(post.getId());
 		postEntity.setTitle(post.getTitle());
 		postEntity.setDescription(post.getDescription());
-		postEntity.setContent(post.getContent());
-		return postEntity;
+		postEntity.setContent(post.getContent());*/
+		return post2;
 	}
 
 	@Override
