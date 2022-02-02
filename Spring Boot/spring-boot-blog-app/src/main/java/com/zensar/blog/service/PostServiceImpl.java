@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.zensar.blog.entity.Post;
@@ -58,8 +62,15 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> getAllPost() {
-		return postRepository.findAll();
+	public List<Post> getAllPost(int pageNumber,int pageSize,String sortBy) {
+		
+		Pageable pageable=PageRequest.of(pageNumber,pageSize,Sort.by(sortBy));
+		
+		Page<Post> page = postRepository.findAll(pageable);
+		
+		List<Post> listOfPost = page.getContent();
+		
+		return listOfPost;
 	}
 
 	@Override

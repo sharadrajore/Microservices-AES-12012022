@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.blog.entity.Post;
+import com.zensar.blog.payload.AppConstant;
 import com.zensar.blog.payload.PostDto;
 import com.zensar.blog.service.PostService;
 
@@ -43,8 +45,11 @@ public class PostController {
 
 	// http://localhost:8080/api/posts -> GET
 	@GetMapping
-	public List<Post> getAllPost() {
-		return postService.getAllPost();
+	public List<Post> getAllPost(@RequestParam(value = "pageNo", defaultValue = AppConstant.PAGENO, required = false) int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,
+			@RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy) {
+
+		return postService.getAllPost(pageNumber, pageSize, sortBy);
 	}
 
 	// http://localhost:8080/api/posts/{postId} -> GET

@@ -10,7 +10,7 @@ import com.zensar.blog.payload.PostDto;
 
 public interface PostService {
 	public PostDto createPost(PostDto post);
-	public List<Post> getAllPost();
+	public List<Post> getAllPost(int pageNumber,int pageSize,String sortBy);
 	public PostDto getPostById(Long id) ;
 	public void deletePostById(Long postId);
 	public PostDto updatePost( PostDto post, Long postId);
