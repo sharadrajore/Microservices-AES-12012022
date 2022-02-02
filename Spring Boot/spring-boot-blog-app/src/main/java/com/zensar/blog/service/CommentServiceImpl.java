@@ -1,10 +1,12 @@
 package com.zensar.blog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.zensar.blog.entity.Comment;
 import com.zensar.blog.entity.Post;
+import com.zensar.blog.exception.BlogAPIException;
 import com.zensar.blog.exception.ResourceNotFoundException;
 import com.zensar.blog.payload.CommentDto;
 import com.zensar.blog.repository.CommentRepository;
@@ -53,5 +55,43 @@ public class CommentServiceImpl implements CommentService {
 		dto.setBody(comment.getBody());
 
 		return dto;
+	}
+
+	@Override
+	public void deleteComment(Long postId, Long commentId) {
+		
+		Post post = postRepository.findById(postId)
+				.orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
+		
+		Comment comment = commentRepository.findById(commentId)
+				.orElseThrow(() -> new ResourceNotFoundException("comment", "id", postId));
+		
+		if(!(comment.getPost().getId()==(post.getId()))) {
+			throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not blog to post");
+		}
+		commentRepository.deleteById(commentId);
+	}
+
+	@Override
+	public CommentDto getCommentById(Long postId, Long commentId) {
+		commentRepository.findById(commentId);
+		
+		Post post = postRepository.findById(postId)
+				.orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
+		
+		Comment comment = commentRepository.findById(commentId)
+				.orElseThrow(() -> new ResourceNotFoundException("comment", "id", postId));
+		
+		if(!(comment.getPost().getId()==(post.getId()))) {
+			throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not blog to post");
+		}
+		
+		return mapToDto(comment);
+	}
+
+	@Override
+	public CommentDto updateComment(Long postId, long commentId, CommentDto commentRequest) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

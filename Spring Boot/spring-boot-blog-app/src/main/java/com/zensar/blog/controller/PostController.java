@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.blog.entity.Post;
-import com.zensar.blog.payload.AppConstant;
 import com.zensar.blog.payload.PostDto;
 import com.zensar.blog.service.PostService;
+import com.zensar.blog.util.AppConstant;
 
 @RestController
 @RequestMapping("/api/posts")
