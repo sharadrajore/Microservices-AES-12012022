@@ -1,0 +1,30 @@
+spring: 
+  application:
+   name: coupon-service
+  config:
+    import: configserver:http://localhost:8888/
+    
+    
+  profiles:
+    active:
+    - prod
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+   
+   
+
+
+ 
+  
+ 
+
+    
+
+    
+    
+    

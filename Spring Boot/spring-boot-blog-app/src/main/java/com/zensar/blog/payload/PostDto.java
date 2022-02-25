@@ -3,8 +3,11 @@ package com.zensar.blog.payload;
 public class PostDto {
 
 	private Long id;
+
 	private String title;
+
 	private String description;
+
 	private String content;
 
 	public PostDto(Long id, String title, String description, String content) {

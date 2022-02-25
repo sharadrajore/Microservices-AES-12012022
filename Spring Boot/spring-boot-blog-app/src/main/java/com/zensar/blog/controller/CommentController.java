@@ -1,8 +1,11 @@
 package com.zensar.blog.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,15 +31,23 @@ public class CommentController {
 		return new ResponseEntity<CommentDto>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
 	}
 	
+
 	@DeleteMapping("/posts/{postId}/comments/{commentId}")
-	public ResponseEntity<String> deleteComment(@PathVariable("postId") long postId,@PathVariable("commentId")long commentId){
+	public ResponseEntity<String> deleteComment(@PathVariable("postId") long postId,
+			@PathVariable("commentId") long commentId) {
 		commentService.deleteComment(postId, commentId);
-		return new ResponseEntity<String>("Comment deleted Successfullyy",HttpStatus.OK);
+		return new ResponseEntity<String>("Comment deleted Successfullyy", HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/posts/{postId}/comments/{commentId}")
-	public ResponseEntity<CommentDto> getCommentById(@PathVariable("postId") long postId,@PathVariable("commentId") long commentId) {
-		return new ResponseEntity<CommentDto>(commentService.getCommentById(postId, commentId),HttpStatus.OK);
+	public ResponseEntity<CommentDto> getCommentById(@PathVariable("postId") long postId,
+			@PathVariable("commentId") long commentId) {
+		return new ResponseEntity<CommentDto>(commentService.getCommentById(postId, commentId), HttpStatus.OK);
+	}
+
+	@GetMapping("/posts/comments/{commentName}")
+	public ResponseEntity<List<CommentDto>> getCommentByName(@PathVariable("commentName") String commentName) {
+		return new ResponseEntity<List<CommentDto>>(commentService.getCommentByName(commentName), HttpStatus.OK);
 	}
 
 }

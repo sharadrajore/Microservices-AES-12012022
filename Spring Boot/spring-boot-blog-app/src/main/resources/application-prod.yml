@@ -1,17 +1,12 @@
-spring:  
-  datasource:
-    password: root
-    url: jdbc:mysql://localhost:3306/blogApp
-    username: root
-    
+spring:
+   datasource:
+      password: root
+      url: jdbc:mysql://localhost:3306/blogApp
+      username: root
+   jpa:
 # create , create-drop , validate, update, none
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    
- 
-    
-    
-
-    
+      hibernate:
+         ddl-auto: update
+      show-sql: true
+      
+      

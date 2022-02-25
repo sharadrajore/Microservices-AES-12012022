@@ -2,6 +2,38 @@ spring:
   profiles:
     active:
     - prod
+  security:
+    user:
+      name: test
+      password: test@123
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /my-actuator
+
+
+  endpoint:
+    shutdown:
+      enabled: true
+      
+server:
+  servlet:
+    context-path: /blog
+    
+springdoc:
+  swagger-ui:
+    path: /my-swagger-ui
+      
+      
+      
+      
+
+ 
+
+
       
     
   

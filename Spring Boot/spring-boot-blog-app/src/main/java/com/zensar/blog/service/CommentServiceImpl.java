@@ -1,5 +1,9 @@
 package com.zensar.blog.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -74,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public CommentDto getCommentById(Long postId, Long commentId) {
-		commentRepository.findById(commentId);
+		//commentRepository.findById(commentId);
 		
 		Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new ResourceNotFoundException("post", "id", postId));
@@ -94,4 +98,27 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public List<CommentDto> getCommentByName(String name) {
+		List<Comment> comments = commentRepository.commentByItsName(name);
+		
+		/*List<CommentDto> commentDto=new ArrayList<>();
+		
+		for(Comment c:comments) {
+			commentDto.add(mapToDto(c));
+		}*/
+		
+		
+		return comments.stream().map((comment)->mapToDto(comment)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<CommentDto> getCommentsByPostId(long postId) {
+		// TODO Auto-generated method stub
+		
+		List<Comment> list = commentRepository.getCommentsByPostId(postId);
+		return null;
+	}
+	
+	
 }

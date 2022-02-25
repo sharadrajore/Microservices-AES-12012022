@@ -1,20 +1,18 @@
 package com.zensar.blog;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.zensar.blog.controller.PostController;
-import com.zensar.blog.payload.PostDto;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.License;
 
 @SpringBootApplication
-
+//@OpenAPIDefinition(info = @Info(title = "Blog Application",version = "v1",description = "You can Read the blog  and Comment on Post"))
 public class SpringBootBlogAppApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
 	public static void main(String[] args) {
@@ -57,5 +55,17 @@ public class SpringBootBlogAppApplication extends SpringBootServletInitializer i
 		 * postController.createPost(post2);
 		 */
 	}
+
+	@Bean
+	  public OpenAPI springShopOpenAPI() {
+	      return new OpenAPI()
+	              .info(new io.swagger.v3.oas.models.info.Info().
+	            		  title("Blog App").
+	            		  description("Blog sample application").
+	            		  version("v0.0.1").
+	            		  license(new License().name("Apache 2.0").
+	            				  url("http://springdoc.org")));
+     
+	  }
 
 }

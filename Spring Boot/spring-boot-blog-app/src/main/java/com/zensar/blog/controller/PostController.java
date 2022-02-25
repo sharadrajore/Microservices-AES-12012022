@@ -2,7 +2,6 @@ package com.zensar.blog.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,16 @@ import com.zensar.blog.payload.PostDto;
 import com.zensar.blog.service.PostService;
 import com.zensar.blog.util.AppConstant;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/posts")
+@Tag(name = "Post Resource")
+
 public class PostController {
 
 	// CRUD Created,Read,Update,Delete
@@ -38,6 +45,7 @@ public class PostController {
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	// @RequestMapping(method=RequestMethod.POST)
+	@Hidden
 	public ResponseEntity<PostDto> createPost(@RequestBody PostDto post) {
 		// postService.createPost(post);
 		return new ResponseEntity<PostDto>(postService.createPost(post), HttpStatus.CREATED);
@@ -54,7 +62,8 @@ public class PostController {
 
 	// http://localhost:8080/api/posts/{postId} -> GET
 	@GetMapping(path = "/{postId}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public PostDto getPostById(@PathVariable("postId") Long id) {
+	@Operation(summary = "Get Post by Post ID" ,description = "Get Post by Post ID")
+	public @ApiResponse(description = "Post Object ")PostDto getPostById(@Parameter(description = "Enter Post Id of the Post")@PathVariable("postId") Long id) {
 		return postService.getPostById(id);
 	}
 

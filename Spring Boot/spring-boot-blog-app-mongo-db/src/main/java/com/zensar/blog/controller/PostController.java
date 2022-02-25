@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.blog.entity.Post;
@@ -43,7 +44,9 @@ public class PostController {
 
 	// http://localhost:8080/api/posts -> GET
 	@GetMapping
-	public List<Post> getAllPost() {
+	public List<Post> getAllPost(@RequestParam("pageNo")int pageNumber, @RequestParam("pageSize")int pageSize) {
+		System.out.println("pageNumber ->>>>"+pageNumber);
+		System.out.println("pageSize  ->>>>>"+pageSize);
 		return postService.getAllPost();
 	}
 
