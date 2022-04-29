@@ -17,10 +17,13 @@ public class SampleController {
 		users.add(new User("Jerry", "Washington"));
 		users.add(new User("Ivan", "London"));
 	}
+	
+	// http://localhost:8080/contactus
+	
 	@GetMapping(value="contactus")
 	public String contactUs(Model model) {
 		model.addAttribute("users", users);
-		return "contactus";
+		return "contactus";// logical name of the view contactus.html
 	}
 }
 
